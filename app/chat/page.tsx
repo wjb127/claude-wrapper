@@ -1,14 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { AuthForm } from '@/components/auth/auth-form'
+import { ChatContainer } from '@/components/chat/chat-container'
 
-export default async function Home() {
+export default async function ChatPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (user) {
-    redirect('/chat')
+  if (!user) {
+    redirect('/')
   }
 
-  return <AuthForm />
+  return <ChatContainer />
 }

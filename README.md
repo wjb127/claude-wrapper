@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Claude Wrapper
 
-## Getting Started
+Next.js 15 + Supabase + Vercel + Claude API를 사용한 Claude 웹 인터페이스 클론
 
-First, run the development server:
+## 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🔐 Supabase 인증
+- 💬 Claude API를 통한 실시간 채팅
+- 📝 대화 저장 및 관리
+- 🎨 Claude 웹 인터페이스와 유사한 UI
+- 📱 반응형 디자인
+
+## 시작하기
+
+### 1. 환경 변수 설정
+
+`.env.local` 파일을 생성하고 다음 변수들을 설정하세요:
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Claude API
+CLAUDE_API_KEY=your_claude_api_key
+
+# App URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Supabase 설정
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. [Supabase](https://supabase.com) 프로젝트 생성
+2. `supabase/schema.sql` 파일의 SQL을 실행하여 데이터베이스 스키마 생성
+3. Authentication 설정에서 Email/Password 인증 활성화
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Claude API 키 발급
 
-## Learn More
+1. [Anthropic Console](https://console.anthropic.com) 접속
+2. API Keys 섹션에서 새 API 키 생성
+3. `.env.local` 파일에 API 키 추가
 
-To learn more about Next.js, take a look at the following resources:
+### 4. 설치 및 실행
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# 의존성 설치
+npm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 개발 서버 실행
+npm run dev
 
-## Deploy on Vercel
+# 프로덕션 빌드
+npm run build
+npm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 기술 스택
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework**: Next.js 15 (App Router)
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **AI**: Claude API (Anthropic)
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+
+## 프로젝트 구조
+
+```
+claude-wrapper/
+├── app/
+│   ├── api/
+│   │   ├── chat/
+│   │   └── conversations/
+│   ├── chat/
+│   └── page.tsx
+├── components/
+│   ├── auth/
+│   └── chat/
+├── lib/
+│   └── supabase/
+├── types/
+└── supabase/
+    └── schema.sql
+```
+
+## Vercel 배포
+
+1. GitHub에 리포지토리 푸시
+2. [Vercel](https://vercel.com)에서 프로젝트 Import
+3. 환경 변수 설정
+4. 배포
+
+## 라이선스
+
+MIT
