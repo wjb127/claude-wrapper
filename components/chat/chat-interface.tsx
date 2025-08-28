@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Send, Bot, User } from 'lucide-react'
+import { Send, Bot, User, Sparkles, Trash2 } from 'lucide-react'
 
 interface Message {
   id: string
@@ -118,81 +118,90 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen gradient-animation">
       {/* Header */}
-      <header className="bg-white border-b px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <Bot className="w-5 h-5 text-white" />
+      <header className="glass-effect-dark px-6 py-4 flex items-center justify-between shadow-xl">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg hover-lift">
+            <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <h1 className="font-semibold text-gray-800">AI Assistant</h1>
+          <div>
+            <h1 className="font-bold text-white text-lg">AI Assistant</h1>
+            <p className="text-xs text-white/60">Powered by Claude</p>
+          </div>
         </div>
         {messages.length > 0 && (
           <button
             onClick={clearHistory}
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            className="glass-effect px-4 py-2 rounded-lg text-white/80 hover:text-white transition-all duration-300 hover-lift flex items-center gap-2"
           >
-            Clear
+            <Trash2 className="w-4 h-4" />
+            <span className="text-sm">Clear</span>
           </button>
         )}
       </header>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto">
+      <div className="flex-1 overflow-y-auto px-4 py-6">
+        <div className="max-w-4xl mx-auto">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-400 p-8">
-              <Bot className="w-16 h-16 mb-4" />
-              <p className="text-lg">How can I help you today?</p>
+            <div className="flex flex-col items-center justify-center h-full">
+              <div className="glass-effect rounded-3xl p-12 text-center hover-lift">
+                <div className="w-20 h-20 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 pulse-glow">
+                  <Sparkles className="w-12 h-12 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-2">Welcome!</h2>
+                <p className="text-white/70">How can I assist you today?</p>
+              </div>
             </div>
           ) : (
-            <div className="p-4 space-y-4">
+            <div className="space-y-6">
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`flex gap-3 ${
+                  className={`flex gap-4 ${
                     message.role === 'user' ? 'justify-end' : 'justify-start'
                   }`}
                 >
                   {message.role === 'assistant' && (
-                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <Bot className="w-6 h-6 text-white" />
                     </div>
                   )}
                   
                   <div
-                    className={`max-w-[70%] rounded-lg px-4 py-2 ${
+                    className={`max-w-[70%] rounded-2xl px-5 py-3 hover-lift ${
                       message.role === 'user'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-white border text-gray-800'
+                        ? 'glass-effect bg-white/20 text-white shadow-lg'
+                        : 'glass-effect text-white shadow-lg'
                     }`}
                   >
-                    <p className="whitespace-pre-wrap">{message.content}</p>
-                    <p className={`text-xs mt-1 ${
-                      message.role === 'user' ? 'text-blue-100' : 'text-gray-400'
+                    <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                    <p className={`text-xs mt-2 ${
+                      message.role === 'user' ? 'text-white/60' : 'text-white/60'
                     }`}>
                       {new Date(message.timestamp).toLocaleTimeString()}
                     </p>
                   </div>
 
                   {message.role === 'user' && (
-                    <div className="w-8 h-8 bg-gray-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <User className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <User className="w-6 h-6 text-white" />
                     </div>
                   )}
                 </div>
               ))}
               
               {isLoading && (
-                <div className="flex gap-3 justify-start">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-white" />
+                <div className="flex gap-4 justify-start">
+                  <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <Bot className="w-6 h-6 text-white" />
                   </div>
-                  <div className="bg-white border rounded-lg px-4 py-2">
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  <div className="glass-effect rounded-2xl px-5 py-4 shadow-lg">
+                    <div className="typing-dots flex gap-2">
+                      <span className="w-2 h-2 bg-white/70 rounded-full"></span>
+                      <span className="w-2 h-2 bg-white/70 rounded-full"></span>
+                      <span className="w-2 h-2 bg-white/70 rounded-full"></span>
                     </div>
                   </div>
                 </div>
@@ -205,30 +214,32 @@ export function ChatInterface() {
       </div>
 
       {/* Input */}
-      <div className="border-t bg-white p-4">
-        <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type your message..."
-              className="flex-1 resize-none rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500 min-h-[50px] max-h-[200px]"
-              disabled={isLoading}
-              rows={1}
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || isLoading}
-              className="bg-blue-500 text-white rounded-lg px-4 py-3 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <Send className="w-5 h-5" />
-            </button>
+      <div className="p-4">
+        <div className="max-w-4xl mx-auto">
+          <form onSubmit={handleSubmit} className="glass-effect rounded-2xl p-3 shadow-xl hover-lift">
+            <div className="flex gap-3">
+              <textarea
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Type your message..."
+                className="flex-1 resize-none bg-transparent text-white placeholder-white/50 px-4 py-3 focus:outline-none min-h-[50px] max-h-[200px]"
+                disabled={isLoading}
+                rows={1}
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                className="bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl px-6 py-3 hover:from-violet-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover-lift flex items-center justify-center"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-xs text-white/40 mt-2 text-center">
+              Press Enter to send, Shift+Enter for new line
+            </p>
           </form>
-          <p className="text-xs text-gray-400 mt-2 text-center">
-            Press Enter to send, Shift+Enter for new line
-          </p>
         </div>
       </div>
     </div>
