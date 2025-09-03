@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ChatProvider } from "@/lib/hooks/use-chat";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Claude Wrapper",
-  description: "Claude AI Interface Clone",
+  title: "Claude Wrapper - Advanced AI Chat Interface",
+  description: "Professional Claude AI interface with advanced features like conversation management, file processing, plugins, and more",
+  keywords: "Claude AI, Chat Interface, AI Assistant, Conversation Management",
+  authors: [{ name: "Claude Wrapper Team" }],
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#8b5cf6',
 };
 
 export default function RootLayout({
@@ -23,11 +32,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ChatProvider>
+          {children}
+        </ChatProvider>
       </body>
     </html>
   );
